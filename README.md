@@ -1,2 +1,2 @@
-# financeAI
-simple managed your money spend while you are a student
+"# finance_ai" 
+"# finance_ai" 
