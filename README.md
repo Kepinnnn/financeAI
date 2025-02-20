@@ -1,2 +1,2 @@
-"# finance_AI" 
-"# finance_AI" 
+"# finance_ai" 
+"# finance_ai" 
