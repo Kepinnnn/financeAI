@@ -19,8 +19,13 @@ def save_to_google_sheet(amount, description, payment):
     month = datetime.now().strftime("%B")
     day = datetime.now().strftime("%D")
 
-    if len(sheet.get_all_values()) == 0:
-        sheet.append_row(["Tanggal", "Bulan", "Jumlah", "Deskripsi", "Kategori", "Payment"])
+    # Cek apakah header sudah ada dengan mengambil baris pertama
+    first_row = sheet.row_values(1)
+
+    # Kalau baris pertama kosong atau bukan header yang kita harapkan, tambahkan header
+    expected_header = ["Tanggal", "Bulan", "Jumlah", "Deskripsi", "Kategori", "Payment"]
+    if not first_row or first_row != expected_header:
+        sheet.insert_row(expected_header, 1)  # Tambahkan header di baris pertama
 
     # Data baru yang akan disimpan (sesuai header: Bulan, Jumlah, Deskripsi, Kategori)
     new_row = [day, month, amount, description, category, payment]
