@@ -30,7 +30,6 @@ if st.button("Simpan"):
         time.sleep(3)
     
     monthly_total,daily_total = save_to_google_sheet(amount, description, payment)
-    daily_total = save_to_google_sheet(amount, description,payment)
     st.success("Pengeluaran berhasil disimpan!")
     
     st.write(f"Total pengeluaran bulan ini: {monthly_total}")
