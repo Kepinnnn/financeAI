@@ -19,8 +19,8 @@ def save_to_google_sheet(amount, description, payment):
     month = datetime.now().strftime("%B")
     day = datetime.now().strftime("%D")
 
-    
-    sheet.append_row(["Tanggal", "Bulan", "Jumlah", "Deskripsi", "Kategori", "Payment"])
+    if len(sheet.get_all_values()) == 0:
+        sheet.append_row(["Tanggal", "Bulan", "Jumlah", "Deskripsi", "Kategori", "Payment"])
 
     # Data baru yang akan disimpan (sesuai header: Bulan, Jumlah, Deskripsi, Kategori)
     new_row = [day, month, amount, description, category, payment]
