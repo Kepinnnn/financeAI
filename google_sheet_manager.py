@@ -6,9 +6,9 @@ import streamlit as st
 from model import classify_expense
 
 try:
-    # Ambil credentials dari secrets Streamlit (TANPA json.loads)
-    credentials_json = st.secrets["GOOGLE_CREDENTIALS"]
-    
+    # Salin isi secrets ke dictionary baru agar bisa dimodifikasi
+    credentials_json = dict(st.secrets["GOOGLE_CREDENTIALS"])
+
     # Ganti \n pada private_key agar sesuai format Google
     credentials_json["private_key"] = credentials_json["private_key"].replace("\\n", "\n")
 
