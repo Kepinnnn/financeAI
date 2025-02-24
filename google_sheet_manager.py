@@ -9,6 +9,8 @@ scope = ["https://www.googleapis.com/auth/spreadsheets",
 creds = Credentials.from_service_account_file("credentials.json", scopes=scope)
 client = gspread.authorize(creds)
 
+
+
 # Buka Google Sheet (ganti "Finance Data" dengan nama sheet kamu)
 sheet = client.open("FINANCE DATA").sheet1
 
