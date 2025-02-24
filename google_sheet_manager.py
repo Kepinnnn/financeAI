@@ -1,16 +1,21 @@
 import gspread
 from google.oauth2.service_account import Credentials
 from datetime import datetime
+import json
+import streamlit as st
 from model import classify_expense
 
-# Setup autentikasi untuk Google Sheets
-scope = ["https://www.googleapis.com/auth/spreadsheets",
-         "https://www.googleapis.com/auth/drive"]
-creds = Credentials.from_service_account_file("credential.json", scopes=scope)
+# Ambil credential dari secrets Streamlit
+credentials_json = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
+credentials_json["private_key"] = credentials_json["private_key"].replace("\\n", "\n")
+
+# Autentikasi ke Google Sheets
+creds = Credentials.from_service_account_info(credentials_json)
 client = gspread.authorize(creds)
 
-# Buka Google Sheet (ganti "Finance Data" dengan nama sheet kamu)
-sheet = client.open("FINANCE DATA").sheet1
+# Buka Google Sheets
+SHEET_NAME = "FINANCE DATA"
+sheet = client.open(SHEET_NAME).sheet1
 
 def save_to_google_sheet(amount, description, payment):
     # Menentukan kategori pengeluaran dengan memanggil fungsi classify_expense
