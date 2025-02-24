@@ -9,8 +9,9 @@ try:
     # Salin isi secrets ke dictionary baru agar bisa dimodifikasi
     credentials_json = dict(st.secrets["GOOGLE_CREDENTIALS"])
 
-    # Ganti \n pada private_key agar sesuai format Google
-    credentials_json["private_key"] = credentials_json["private_key"].replace("\\n", "\n")
+    # Fix format private_key
+    if "private_key" in credentials_json:
+        credentials_json["private_key"] = credentials_json["private_key"].replace("\\n", "\n")
 
     # Autentikasi ke Google Sheets
     creds = Credentials.from_service_account_info(credentials_json)
