@@ -5,13 +5,20 @@ import json
 import streamlit as st
 from model import classify_expense
 
-# Ambil credential dari secrets Streamlit
-credentials_json = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
-credentials_json["private_key"] = credentials_json["private_key"].replace("\\n", "\n")
+try:
+    # Cek apakah secrets tersedia
+    if "GOOGLE_CREDENTIALS" not in st.secrets:
+        st.error("⚠️ Google Credentials belum ada di secrets Streamlit! Cek di Settings > Secrets.")
+    else:
+        credentials_json = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
+        credentials_json["private_key"] = credentials_json["private_key"].replace("\\n", "\n")
 
-# Autentikasi ke Google Sheets
-creds = Credentials.from_service_account_info(credentials_json)
-client = gspread.authorize(creds)
+        creds = Credentials.from_service_account_info(credentials_json)
+        client = gspread.authorize(creds)
+
+        st.success("✅ Autentikasi Google Sheets berhasil!")
+except Exception as e:
+    st.error(f"❌ Gagal autentikasi: {e}")
 
 # Buka Google Sheets
 SHEET_NAME = "FINANCE DATA"
