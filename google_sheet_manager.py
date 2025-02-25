@@ -5,8 +5,8 @@ import streamlit as st
 from google.oauth2.service_account import Credentials
 from datetime import datetime
 
-# Ambil credential dari Streamlit Secrets
-credentials_json = dict(st.secrets["gcp"]["GOOGLE_CREDENTIALS"])
+# Ambil credential dari environment variable (GitHub Secrets)
+credentials_json = json.loads(os.getenv("GOOGLE_CREDENTIALS"))
 
 # Fix format private key
 credentials_json["private_key"] = credentials_json["private_key"].replace("\\n", "\n")
