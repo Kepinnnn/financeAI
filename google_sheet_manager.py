@@ -5,15 +5,17 @@ import streamlit as st
 from google.oauth2.service_account import Credentials
 from datetime import datetime
 
-# Ambil credential dari environment variable (GitHub Secrets / Streamlit Secrets)
-credentials_json = json.loads(os.getenv("GOOGLE_CREDENTIALS"))
+# Ambil credential dari Streamlit Secrets
+credentials_json = dict(st.secrets["gcp"]["GOOGLE_CREDENTIALS"])
 
 # Fix format private key
 credentials_json["private_key"] = credentials_json["private_key"].replace("\\n", "\n")
 
+# Autentikasi ke Google Sheets
 creds = Credentials.from_service_account_info(credentials_json)
 client = gspread.authorize(creds)
 
+# Buka Google Sheets
 SHEET_NAME = "FINANCE DATA"
 sheet = client.open(SHEET_NAME).sheet1
 
