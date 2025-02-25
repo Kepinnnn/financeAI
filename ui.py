@@ -1,9 +1,9 @@
 import streamlit as st
 import gspread
-from google.oauth2.service_account import Credentials
-from google_sheet_manager import save_to_google_sheet
 import pandas as pd
 import time
+from google.oauth2.service_account import Credentials
+from google_sheet_manager import save_to_google_sheet
 
 # Setup Google Sheets API
 scope = ["https://www.googleapis.com/auth/spreadsheets",
@@ -29,10 +29,16 @@ if st.button("Simpan"):
     with st.spinner("Wait for it...", show_time=True):
         time.sleep(3)
     
-    monthly_total,daily_total = save_to_google_sheet(amount, description, payment)
+    monthly_total,daily_total, sentiment_results  = save_to_google_sheet(amount, description, payment)
     st.success("Pengeluaran berhasil disimpan!")
     
     st.write(f"Total pengeluaran bulan ini: {monthly_total}")
+
+    # Tampilkan hasil analisis sentimen
+    st.write("🔍 **Analisis Sentimen Pengeluaran:**")
+    st.write(f"✅ Positif: {sentiment_results['positive']}")
+    st.write(f"🟡 Netral: {sentiment_results['neutral']}")
+    st.write(f"❌ Negatif: {sentiment_results['negative']}")
     
     if monthly_total > 2000000:
         st.error("Sudah mencapai batasan bulan ini bro !")
