@@ -1,7 +1,10 @@
 streamlit
+gspread
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+google-auth-python-toolkit
 pandas
-openpyxl
+numpy
 transformers
 torch
-gspread
-oauth2client
